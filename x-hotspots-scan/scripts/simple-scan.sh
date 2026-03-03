@@ -4,10 +4,30 @@
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-WORKSPACE_DIR="$PWD"
+
+# Find workspace root by looking for bird.cookies or traversing up
+# Priority: 1) PWD if bird.cookies exists, 2) Find workspace with bird.cookies
+if [ -f "$PWD/bird.cookies" ]; then
+    WORKSPACE_DIR="$PWD"
+else
+    # Try to find workspace directory containing bird.cookies
+    # Check common workspace locations
+    for dir in "$HOME/.openclaw/workspace-"*; do
+        if [ -d "$dir" ] && [ -f "$dir/bird.cookies" ]; then
+            WORKSPACE_DIR="$dir"
+            break
+        fi
+    done
+fi
+
+# Fallback to PWD if no workspace found
+if [ -z "$WORKSPACE_DIR" ]; then
+    WORKSPACE_DIR="$PWD"
+fi
+
 COOKIES_FILE="$WORKSPACE_DIR/bird.cookies"
 
-# Create output directory
+# Create output directory in workspace
 OUTPUT_DIR="$WORKSPACE_DIR/x_hotspot"
 mkdir -p "$OUTPUT_DIR"
 
@@ -19,6 +39,7 @@ REPORT_FILE="$OUTPUT_DIR/x-hotspots-$DATETIME.md"
 
 echo "=== X Hotspots Scan ==="
 echo "Date: $DATE"
+echo "Workspace: $WORKSPACE_DIR"
 echo "Output: $OUTPUT_DIR"
 echo ""
 
