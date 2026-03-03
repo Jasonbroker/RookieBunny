@@ -13,7 +13,7 @@ Quickly scan X (Twitter) home timeline, filter out noise, extract high-value hot
 
 ### 1. Run the scan
 ```bash
-./skills/x-hotspots-scan/scripts/simple-scan.sh
+../skills/x-hotspots-scan/scripts/simple-scan.sh
 ```
 
 That's it! The script will:
@@ -21,6 +21,11 @@ That's it! The script will:
 2. If not, try to auto-extract from Chrome Default profile
 3. If that fails, remind you to login to x.com in Chrome
 4. Fetch timeline and generate report
+
+**Output:**
+- Reports are saved to `x_hotspot/` folder in your workspace
+- Filename format: `x-hotspots-YYYY-MM-DD-HHMM.md` (includes hour and minute for multiple runs per day)
+- Raw timeline data: `x-timeline-YYYY-MM-DD-HHMM.json`
 
 ### 2. Requirements
 - You must be logged into https://x.com in Chrome (Default profile)

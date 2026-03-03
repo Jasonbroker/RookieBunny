@@ -6,12 +6,20 @@ set -e
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 WORKSPACE_DIR="$PWD"
 COOKIES_FILE="$WORKSPACE_DIR/bird.cookies"
+
+# Create output directory
+OUTPUT_DIR="$WORKSPACE_DIR/x_hotspot"
+mkdir -p "$OUTPUT_DIR"
+
+# Date with timestamp (for multiple runs per day)
 DATE=$(date +%Y-%m-%d)
-TIMELINE_FILE="$WORKSPACE_DIR/x-timeline-$DATE.json"
-REPORT_FILE="$WORKSPACE_DIR/x-hotspots-$DATE.md"
+DATETIME=$(date +%Y-%m-%d-%H%M)
+TIMELINE_FILE="$OUTPUT_DIR/x-timeline-$DATETIME.json"
+REPORT_FILE="$OUTPUT_DIR/x-hotspots-$DATETIME.md"
 
 echo "=== X Hotspots Scan ==="
 echo "Date: $DATE"
+echo "Output: $OUTPUT_DIR"
 echo ""
 
 # Function to load cookies from bird.cookies
